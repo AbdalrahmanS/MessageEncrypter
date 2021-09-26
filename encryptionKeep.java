@@ -4,7 +4,7 @@
  * Summary: This class encryptes message with any cipher, so far the only 
  * cipher that can be used ceaser cipher, but hopefully this will expand in 
  * the future. Right Now it's very basic, with many inefficiencies, but that
- * will be fixed in the future. 
+ * will be fixed in the future.
  */
 
 import java.util.*;
