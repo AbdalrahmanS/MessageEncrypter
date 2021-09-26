@@ -10,23 +10,28 @@
 import java.util.*;
 
 public class encryptionKeep {
+
+    /**
+     * These variables are used for 
+     * the ceaser cipher
+     */
     private String cipherKey = "";
     private HashMap<Character, Integer> cipherKeyMap = new HashMap<>();
-    private HashMap<Character, Integer> trueKeyMap = new HashMap<>();
+    private HashMap<Integer, Character> trueKeyMap = new HashMap<>();
 
     /**
      * Method: String
      * This method recives a message, it then encrypte it using a ceaser
      * cipher. First the method changes all the message's leters in lower-case.
      * It then generates the cipher. Then in the for-loop evey letter is 
-     * replaced with the cipher equivlant 
+     * replaced with the cipher equivlant
      */
     public String caesarCipher(String message) {
         ceaserCipherGenerator();
         message = message.toLowerCase();
         for (int i = 0; i < message.length(); i++) {
             if (message.charAt(i) != ' ') {
-                char cipherChar = getKey(cipherKeyMap, trueKeyMap.get(message.charAt(i)));
+                char cipherChar =  trueKeyMap.get(cipherKeyMap.get(message.charAt(i)));
                 message = message.substring(0, i) + cipherChar + message.substring(i+1);
             } 
         }
@@ -42,7 +47,7 @@ public class encryptionKeep {
         message = message.toLowerCase();
         for (int i = 0; i < message.length(); i++) {
             if (message.charAt(i) != ' ') {
-                char cipherChar = getKey(cipherKeyMap, trueKeyMap.get(message.charAt(i)));
+                char cipherChar =  trueKeyMap.get(cipherKeyMap.get(message.charAt(i)));
                 message = message.substring(0, i) + cipherChar + message.substring(i+1);
             } 
         }
@@ -57,10 +62,10 @@ public class encryptionKeep {
      * this done using the getKey method.
      */
     public String cipherKey() {
-        cipherKey += "[a: " + getKey(trueKeyMap, cipherKeyMap.get('a'));
+        cipherKey += "[a: " + trueKeyMap.get(cipherKeyMap.get('a'));
         for (char i = 'b'; i < 'z' + 1; i++) {
-            cipherKey += ", " + String.valueOf(i) + ": " + 
-                getKey(trueKeyMap, cipherKeyMap.get(i));
+            cipherKey += "| " + String.valueOf(i) + ": " + 
+                trueKeyMap.get(cipherKeyMap.get(i));
         }
         cipherKey += "]\n";
         return cipherKey;
@@ -102,7 +107,7 @@ public class encryptionKeep {
 
         int j = 0;
         for (char i = 'a'; i < 'z' + 1; i++) {
-            trueKeyMap.put(i, j);
+            trueKeyMap.put(j, i);
             cipherKeyMap.put(i, integerArray[j]);
             j++;
         }
@@ -119,18 +124,5 @@ public class encryptionKeep {
             }
         }
         return false;
-    }
-
-    /**
-     * Method borrowed from 
-     * www.techiedelight.com/get-map-key-from-value-java/,
-     * this method kelps find a key, by using it's value
-     */
-    private static <K, V> K getKey(Map<K, V> map, V value) {
-    return map.entrySet()
-                .stream()
-                .filter(entry -> value.equals(entry.getValue()))
-                .map(Map.Entry::getKey)
-                .findFirst().get();
     }
 }
